@@ -1,7 +1,7 @@
 services:
   postgres:
     image: 'postgres:latest'
-    container_name: postgres-open-aero-dream
+    container_name: postgres-aero-dream
     environment:
       - 'POSTGRES_DB=aerodream'
       - 'POSTGRES_PASSWORD=12345'

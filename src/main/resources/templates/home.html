@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="" ?>
+<html xmlns:th = "http://www.thymeleaf.org" lang="EN">
+
+    <head>
+        <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet" />
+        <title>AeroDream - Home</title>
+    </head>
+
+    <body>
+
+        <header>
+            <h1>Sistema de Reserva de Vuelos - AeroDream</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Reservar vuelos</h2>
+                <form action="reserva/booking" method="get">
+                    <input type="submit" value="reservar vuelo">
+                </form>
+            </section>
+            <section>
+            <h2>Vuelos reservados</h2>
+            <form action="reserva/booked" method="get">
+                <input type="submit" value="vuelos reservados">
+            </form>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 AeroDream. Todos los derechos reservados.</p>
+        </footer>
+
+    </body>
+
+</html>

@@ -39,13 +39,20 @@ public final class Constants {
 
     public static class Vuelo{
         public static final String VUELO_SERVICE_PATH = "/vuelo";
-        public static final String VUELO_SERVICE_PATH_SAVE = "/guardar";
-        public static final String VUELO_SERVICE_PATH_UPDATE = "/actualizar";
-        public static final String VUELO_SERVICE_PATH_DELETE = "/eliminar";
-        public static final String VUELO_SERVICE_PATH_ORIGIN = "/buscarPorOrigen";
-        public static final String VUELO_SERVICE_PATH_DESTINE = "/buscarPorDestino";
-        public static final String VUELOs_SERVICE_PATH_BOOKING = "/buscarPorReserva";
+        public static final String VUELO_SERVICE_SAVE = "/guardar";
+        public static final String VUELO_SERVICE_UPDATE = "/actualizar";
+        public static final String VUELO_SERVICE_DELETE = "/eliminar";
+        public static final String VUELO_SERVICE_ORIGIN = "/buscarPorOrigen";
+        public static final String VUELO_SERVICE_DESTINE = "/buscarPorDestino";
         private Vuelo(){}
+    }
+
+    public static class Reserva{
+        public static final String RESERVA_SERVICE_PATH = "/reserva";
+        public static final String RESERVA_SERVICE_BOOKING = "/booking";
+        public static final String RESERVA_SERVICE_BOOKED = "/booked";
+        public static final String RESERVA_SERVICE_SAVE = "/guardar";
+        private Reserva(){}
     }
 
     public static class User{

@@ -11,6 +11,7 @@ public record VueloDTO(
         @JsonProperty("ciudadDestino") Optional<String> ciudadDestino,
         @JsonProperty("fecha") Optional<LocalDate> fecha,
         @JsonProperty("horaSalida") Optional<LocalTime> horaSalida,
-        @JsonProperty("aerolinea") Optional<String> aerolinea
+        @JsonProperty("aerolinea") Optional<String> aerolinea,
+        @JsonProperty("precio") Optional<Double> precio
 ) {
 }

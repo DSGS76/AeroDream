@@ -1,5 +1,6 @@
 package com.pa.aerodream.persistence.entity;
 
+import com.pa.aerodream.persistence.entity.enums.EnumClase;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +20,11 @@ public class Reserva implements Serializable {
     @Column(name = "idReserva",nullable = false,unique = true)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+    private String asiento;
+    private Boolean estadoPago;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
+    private EnumClase clase;
 
     /*
      * Relacion bidireccional uno a muchos [cliente (1) <--> reserva(n)], un cliente se presenta en varias reservas,
@@ -39,13 +45,5 @@ public class Reserva implements Serializable {
     @JoinColumn(name = "id_vueloFK")
     @Setter
     private Vuelo vuelo;
-
-    /*
-     * Relacion unidireccional uno a uno [reserva(1) --> ticket(1)], una reserva tiene un ticket,
-     * y un ticket pertenece unicamente a una reserva
-     */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_TicketFK", nullable = false,unique = true)
-    private Ticket ticket;
 
 }

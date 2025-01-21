@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="" ?>
-<html xmlns:th = "http://www.thymeleaf.org" lang="EN">
+<html xmlns:th = "http://www.thymeleaf.org" lang="ES">
 
 <head>
     <link href="../static/css/booking.css" th:href="@{/css/booking.css}" rel="stylesheet" />
@@ -7,7 +7,52 @@
 </head>
 
 <body>
+    <h2> Reservas hechas </h2>
 
-</body>
+    <table class="styled-table">
+
+        <thead>
+            <tr>
+                <th>Asiento</th>
+                <th>Estado de pago</th>
+                <th>Clase</th>
+                <th>Nombre del reservador</th>
+                <th>Aerolínea</th>
+                <th>Precio</th>
+                <th>Fecha</th>
+                <th>Hora de salida</th>
+                <th>Ciudad de origen</th>
+                <th>Ciudad de destino</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="reserva : ${reservas}">
+                <tr>
+                    <td th:text="${reserva.asiento()}"></td>
+                    <td th:if=""
+                            th:text="${reserva.estadoPago()}"></td>
+                    <td th:text="${reserva.clase()}"></td>
+                    <td th:text="${reserva.cliente().getNombre()}"></td>
+                    <td th:text="${reserva.vuelo().getAerolinea()}"></td>
+                    <td th:text="${reserva.vuelo().getPrecio()}"></td>
+                    <td th:text="${reserva.vuelo().getFecha()}"></td>
+                    <td th:text="${reserva.vuelo().getHoraSalida()}"></td>
+                    <td th:text="${reserva.vuelo().getCiudadOrigen()}"></td>
+                    <td th:text="${reserva.vuelo().getCiudadDestino()}"></td>
+                    <td>
+                        <form action="booked/eliminar" method="post" onclick="return confirm('¿Está seguro de cerrar sesión?');">
+                            <input type="hidden" name="idReserva" th:value="${reserva.id()}">
+                            <input type="submit" value="Eliminar">
+                        </form>
+                    </td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+
+    <a th:href="@{/api/v1/home}">volver al inicio</a>
+
+    </body>
 
 </html>

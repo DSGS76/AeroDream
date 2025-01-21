@@ -2,8 +2,14 @@ package com.pa.aerodream.presentation.controller;
 
 import com.pa.aerodream.persistence.entity.Reserva;
 import com.pa.aerodream.persistence.repository.ReservaRepository;
+import com.pa.aerodream.presentation.dto.ReservaDTO;
+import com.pa.aerodream.services.ReservaService;
 import com.pa.aerodream.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,27 +23,59 @@ import java.util.Map;
 @RequestMapping(value = Constants.Global.API_BASE_PATH + Constants.Global.API_VERSION + Constants.Reserva.RESERVA_SERVICE_PATH)
 public class BookingController {
 
-    private final ReservaRepository reservaRepository;
+    private final ReservaService reservaService;
 
-    public BookingController(ReservaRepository reservaRepository) {
-        this.reservaRepository = reservaRepository;
+    public BookingController(ReservaService reservaService) {
+        this.reservaService = reservaService;
     }
 
     @GetMapping(Constants.Reserva.RESERVA_SERVICE_BOOKING)
-    public String booking(Model model) {
+    @PreAuthorize("""
+                    hasAnyRole(T(com.pa.aerodream.utils.Constants$User).USER_ROLE_ADMIN,
+                                T(com.pa.aerodream.utils.Constants$User).USER_ROLE_CLIENT)
+                    """)
+    public String booking(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        String role = authentication.getAuthorities().iterator().next().getAuthority();
         return "booking";
     }
 
     @GetMapping(Constants.Reserva.RESERVA_SERVICE_BOOKED)
-    public String booked(Model model) {
-        List<Reserva> reservas = reservaRepository.findAll();
-        if (reservas.isEmpty()) {
-            model.addAttribute("error", "No se encontraron reservas");
+    @PreAuthorize("""
+                    hasAnyRole(T(com.pa.aerodream.utils.Constants$User).USER_ROLE_ADMIN,
+                                T(com.pa.aerodream.utils.Constants$User).USER_ROLE_CLIENT)
+                    """)
+    public String booked(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        String role = authentication.getAuthorities().iterator().next().getAuthority();
+
+        if (role.equals("ROLE_ADMIN")) {
+
+            model.addAttribute("error", "Solo los clientes pueden tener reservas");
             return "error";
+
+        } else if (role.equals("ROLE_CLIENT")) {
+
+            List<ReservaDTO> reservas = reservaService.searchReservasByCliente(username);
+            if (reservas.isEmpty()) {
+                model.addAttribute("error", "No se encontraron reservas");
+                return "error";
+            }
+            log.info(reservas.toString());
+            model.addAttribute("reservas", reservas);
+            return "booked";
+
         }
-        log.info(reservas.toString());
-        model.addAttribute("reservas", reservas);
-        return "booked";
+
+        model.addAttribute("error", "No tiene permisos para reservas");
+        return "error";
+    }
+
+    @DeleteMapping(Constants.Reserva.RESERVA_SERVICE_BOOKED + Constants.Reserva.RESERVA_SERVICE_DELETE)
+    @PreAuthorize("hasRole(T(com.pa.aerodream.utils.Constants$User).USER_ROLE_CLIENT)")
+    public String bookedDelete(@RequestParam Long idReserva) {
+        reservaService.eliminarReserva(idReserva);
+        return "redirect:" + Constants.Reserva.RESERVA_SERVICE_BOOKED;
     }
 
 }

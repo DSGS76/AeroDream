@@ -39,6 +39,7 @@ public final class Constants {
 
     public static class Vuelo{
         public static final String VUELO_SERVICE_PATH = "/vuelo";
+        public static final String VUELO_SERVICE_SEARCH = "/buscar";
         public static final String VUELO_SERVICE_SAVE = "/guardar";
         public static final String VUELO_SERVICE_UPDATE = "/actualizar";
         public static final String VUELO_SERVICE_DELETE = "/eliminar";
@@ -52,6 +53,8 @@ public final class Constants {
         public static final String RESERVA_SERVICE_BOOKING = "/booking";
         public static final String RESERVA_SERVICE_BOOKED = "/booked";
         public static final String RESERVA_SERVICE_SAVE = "/guardar";
+        public static final String RESERVA_SERVICE_UPDATE = "/actualizar";
+        public static final String RESERVA_SERVICE_DELETE = "/eliminar";
         private Reserva(){}
     }
 

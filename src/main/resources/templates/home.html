@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="" ?>
-<html xmlns:th = "http://www.thymeleaf.org" lang="EN">
+<html xmlns:th = "http://www.thymeleaf.org" lang="ES">
 
     <head>
         <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet" />
@@ -10,20 +10,23 @@
 
         <header>
             <h1>Sistema de Reserva de Vuelos - AeroDream</h1>
+            <form th:action="@{/logout}" method="get" onclick="return confirm('¿Está seguro de cerrar sesión?');">
+                <input type="submit" value="cerrar sesión">
+            </form>
         </header>
 
         <main>
             <section>
-                <h2>Reservar vuelos</h2>
-                <form action="reserva/booking" method="get">
-                    <input type="submit" value="reservar vuelo">
-                </form>
+                <h2>Reservar</h2>
+                <a href="reserva/booking">reservar</a>
             </section>
             <section>
-            <h2>Vuelos reservados</h2>
-            <form action="reserva/booked" method="get">
-                <input type="submit" value="vuelos reservados">
-            </form>
+                <h2>Reservas hechas</h2>
+                <a href="reserva/booked">reservas</a>
+            </section>
+            <section>
+                <h2>Vuelos Presentes</h2>
+                <a href="vuelo/buscar">vuelos</a>
             </section>
         </main>
 

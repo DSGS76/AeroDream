@@ -13,7 +13,8 @@ import java.util.Map;
 
 @Controller
 @Slf4j
-@RequestMapping(path = Constants.Global.API_BASE_PATH + Constants.Global.API_VERSION)
+@RequestMapping(path = Constants.Global.API_BASE_PATH
+                + Constants.Global.API_VERSION)
 public class HomeController {
 
     private final ReservaRepository reservaRepository;

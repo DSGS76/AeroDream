@@ -20,7 +20,9 @@ import java.util.Map;
 
 @Controller
 @Slf4j
-@RequestMapping(value = Constants.Global.API_BASE_PATH + Constants.Global.API_VERSION + Constants.Reserva.RESERVA_SERVICE_PATH)
+@RequestMapping(value = Constants.Global.API_BASE_PATH
+                + Constants.Global.API_VERSION
+                + Constants.Reserva.RESERVA_SERVICE_PATH)
 public class BookingController {
 
     private final ReservaService reservaService;
@@ -37,7 +39,20 @@ public class BookingController {
     public String booking(Model model, Authentication authentication) {
         String username = authentication.getName();
         String role = authentication.getAuthorities().iterator().next().getAuthority();
-        return "booking";
+        if (role.equals("ROLE_ADMIN")) {
+
+            model.addAttribute("error", "Solo los clientes pueden hacer reservas");
+            return "error";
+
+        } else if (role.equals("ROLE_CLIENT")) {
+
+
+            return "booking";
+
+        }
+
+        model.addAttribute("error", "No tiene permisos para hacer reservas");
+        return "error";
     }
 
     @GetMapping(Constants.Reserva.RESERVA_SERVICE_BOOKED)

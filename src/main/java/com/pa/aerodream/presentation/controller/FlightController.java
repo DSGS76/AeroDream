@@ -13,7 +13,9 @@ import java.util.Map;
 
 @Controller
 @Slf4j
-@RequestMapping(value = Constants.Global.API_BASE_PATH + Constants.Global.API_VERSION + Constants.Vuelo.VUELO_SERVICE_PATH)
+@RequestMapping(value = Constants.Global.API_BASE_PATH
+                + Constants.Global.API_VERSION
+                + Constants.Vuelo.VUELO_SERVICE_PATH)
 public class FlightController {
 
     private final VueloRepository vueloRepository;

@@ -3,7 +3,9 @@ package com.pa.aerodream.presentation.controller;
 import com.pa.aerodream.persistence.entity.Reserva;
 import com.pa.aerodream.persistence.repository.ReservaRepository;
 import com.pa.aerodream.presentation.dto.ReservaDTO;
+import com.pa.aerodream.presentation.dto.VueloDTO;
 import com.pa.aerodream.services.ReservaService;
+import com.pa.aerodream.services.VueloService;
 import com.pa.aerodream.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatusCode;
@@ -26,9 +28,11 @@ import java.util.Map;
 public class BookingController {
 
     private final ReservaService reservaService;
+    private final VueloService vueloService;
 
-    public BookingController(ReservaService reservaService) {
+    public BookingController(ReservaService reservaService, VueloService vueloService) {
         this.reservaService = reservaService;
+        this.vueloService = vueloService;
     }
 
     @GetMapping(Constants.Reserva.RESERVA_SERVICE_BOOKING)
@@ -39,6 +43,8 @@ public class BookingController {
     public String booking(Model model, Authentication authentication) {
         String username = authentication.getName();
         String role = authentication.getAuthorities().iterator().next().getAuthority();
+        model.addAttribute("username", username);
+        model.addAttribute("role", role);
         if (role.equals("ROLE_ADMIN")) {
 
             model.addAttribute("error", "Solo los clientes pueden hacer reservas");
@@ -46,7 +52,8 @@ public class BookingController {
 
         } else if (role.equals("ROLE_CLIENT")) {
 
-
+            List<VueloDTO> vuelos = vueloService.searchVuelos();
+            model.addAttribute("vuelos", vuelos);
             return "booking";
 
         }
@@ -63,6 +70,8 @@ public class BookingController {
     public String booked(Model model, Authentication authentication) {
         String username = authentication.getName();
         String role = authentication.getAuthorities().iterator().next().getAuthority();
+        model.addAttribute("username", username);
+        model.addAttribute("role", role);
 
         if (role.equals("ROLE_ADMIN")) {
 

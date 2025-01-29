@@ -1,21 +1,48 @@
 <?xml version="1.0" encoding="" ?>
 <html xmlns:th = "http://www.thymeleaf.org" lang="ES">
 
-<head>
-    <link href="../static/css/error.css" th:href="@{/css/error.css}" rel="stylesheet" />
-    <title>AeroDream - Error</title>
-</head>
+    <head>
+        <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet" />
+        <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>
+        <title>AeroDream - Booked</title>
+    </head>
 
-<body>
+    <body>
 
-    <h2> Error </h2>
+        <header class="bg-primary text-white text-center py-3 mb-4">
+            <div class="container d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">Sistema de Reserva de Vuelos - AeroDream</h1>
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        Perfil
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="userMenu">
+                        <li><a class="dropdown-item"><span th:text="${username}"></span></a></li>
+                        <li>
+                            <a th:if="${role == 'ROLE_ADMIN'}" class="dropdown-item"><span>Admin</span></a>
+                            <a th:if="${role == 'ROLE_CLIENT'}" class="dropdown-item"><span>Cliente</span></a>
+                        </li>
+                        <li><a class="dropdown-item" href="">Más</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}" onclick="return confirm('¿Está seguro de cerrar sesión?');">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
 
-    <div class="box-group">
-        <span th:text="${error}"></span>
-    </div>
+        <main class="container">
 
-    <a th:href="@{/api/v1/home}">volver al inicio</a>
+            <h2 class="text-danger">Error</h2>
 
-</body>
+            <div class="alert alert-danger" role="alert" th:text="${error}"></div>
+
+            <a th:href="@{/api/v1/home}" class="btn btn-dark mt-3">Volver al inicio</a>
+        </main>
+
+        <footer class="bg-dark text-white text-center py-3 mt-4">
+            <p>&copy; 2025 AeroDream. Todos los derechos reservados.</p>
+        </footer>
+
+    </body>
 
 </html>

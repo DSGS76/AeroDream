@@ -1,6 +1,9 @@
 package com.pa.aerodream.services;
 
+import com.pa.aerodream.persistence.entity.Cliente;
+import com.pa.aerodream.persistence.entity.Vuelo;
 import com.pa.aerodream.persistence.repository.ReservaRepository;
+import com.pa.aerodream.presentation.dto.ClienteDTO;
 import com.pa.aerodream.presentation.dto.ReservaDTO;
 import com.pa.aerodream.persistence.entity.Reserva;
 import com.pa.aerodream.presentation.dto.VueloDTO;
@@ -48,9 +51,25 @@ public class ReservaService {
         reservaRepository.deleteReservaById(idReserva);
     }
 
+    private ClienteDTO mapToDTO(Cliente cliente) {
+        List<ReservaDTO> reservas = new ArrayList<>();
+        for (Reserva r: cliente.getReservas()) {
+            ReservaDTO reserva = mapToDTO(r);
+            reservas.add(reserva);
+        }
+        return new ClienteDTO(cliente.getId(), cliente.getNombre(), cliente.getCorreo(),
+                              cliente.getTelefono(), reservas);
+    }
+
+    private VueloDTO mapToDTO(Vuelo vuelo) {
+        return new VueloDTO(vuelo.getId(), vuelo.getCiudadOrigen(), vuelo.getCiudadDestino(),
+                            vuelo.getFecha(), vuelo.getHoraSalida(), vuelo.getAerolinea(),
+                            vuelo.getAeropuertoOrigen(), vuelo.getAeropuertoDestino(), vuelo.getPrecioBase());
+    }
+
     private ReservaDTO mapToDTO(Reserva reserva) {
         return new ReservaDTO(reserva.getId(), reserva.getAsiento(), reserva.getEstadoPago(),
-                              reserva.getClase(), reserva.getCliente(), reserva.getVuelo());
+                              reserva.getClase(), mapToDTO(reserva.getCliente()), mapToDTO(reserva.getVuelo()));
     }
 
 }

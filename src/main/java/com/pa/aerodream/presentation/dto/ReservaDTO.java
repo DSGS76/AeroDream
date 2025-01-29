@@ -8,7 +8,7 @@ public record ReservaDTO(Long id,
                          String asiento,
                          Boolean estadoPago,
                          EnumClase clase,
-                         Cliente cliente,
-                         Vuelo vuelo
+                         ClienteDTO cliente,
+                         VueloDTO vuelo
 ) {
 }

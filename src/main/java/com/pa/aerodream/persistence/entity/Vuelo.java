@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @ToString(of = {"id","ciudadOrigen","ciudadDestino","fecha", "horaSalida",
-                "aerolinea", "aeropuertoOrigen", "aeropuertoDestino", "precio"})
+                "aerolinea", "aeropuertoOrigen", "aeropuertoDestino", "precioBase"})
 public class Vuelo {
 
     @Id
@@ -29,7 +29,7 @@ public class Vuelo {
     private String aerolinea;
     private String aeropuertoOrigen;
     private String aeropuertoDestino;
-    private Double precio;
+    private Double precioBase;
 
     /*
      * Relacion bidireccional uno a muchos [vuelo (1) <--> reserva(n)], un vuelo tiene varias reservas,
@@ -40,7 +40,7 @@ public class Vuelo {
     private List<Reserva> reservas = new ArrayList<>();
 
     public Vuelo(String ciudadOrigen, String ciudadDestino, LocalDate fecha, LocalTime horaSalida,
-                 String aerolinea, String aeropuertoOrigen, String aeropuertoDestino, Double precio) {
+                 String aerolinea, String aeropuertoOrigen, String aeropuertoDestino, Double precioBase) {
         super();
         this.ciudadOrigen = ciudadOrigen;
         this.ciudadDestino = ciudadDestino;
@@ -49,7 +49,7 @@ public class Vuelo {
         this.aerolinea = aerolinea;
         this.aeropuertoOrigen = aeropuertoOrigen;
         this.aeropuertoDestino = aeropuertoDestino;
-        this.precio = precio;
+        this.precioBase = precioBase;
     }
 
     public void addReserva(Reserva reserva) {

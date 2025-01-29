@@ -2,35 +2,68 @@
 <html xmlns:th = "http://www.thymeleaf.org" lang="ES">
 
     <head>
-        <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet" />
+        <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet" />
+        <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>
         <title>AeroDream - Home</title>
     </head>
 
     <body>
 
-        <header>
-            <h1>Sistema de Reserva de Vuelos - AeroDream</h1>
-            <form th:action="@{/logout}" method="get" onclick="return confirm('¿Está seguro de cerrar sesión?');">
-                <input type="submit" value="cerrar sesión">
-            </form>
+        <header class="bg-primary text-white text-center py-3 mb-4">
+            <div class="container d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">Sistema de Reserva de Vuelos - AeroDream</h1>
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        Perfil
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="userMenu">
+                        <li><a class="dropdown-item"><span th:text="${username}"></span></a></li>
+                        <li>
+                            <a th:if="${role == 'ROLE_ADMIN'}" class="dropdown-item"><span>Admin</span></a>
+                            <a th:if="${role == 'ROLE_CLIENT'}" class="dropdown-item"><span>Cliente</span></a>
+                        </li>
+                        <li><a class="dropdown-item" href="">Más</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}" onclick="return confirm('¿Está seguro de cerrar sesión?');">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </div>
         </header>
 
-        <main>
-            <section>
-                <h2>Reservar</h2>
-                <a href="reserva/booking">reservar</a>
+        <main class="container">
+            <section class="mb-4" th:if="${role == 'ROLE_CLIENT'}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Reservar</h5>
+                        <p class="card-text">Seleccione esta opción para realizar una nueva reserva de vuelo.</p>
+                        <a href="reserva/booking" class="btn btn-success">Reservar</a>
+                    </div>
+                </div>
             </section>
-            <section>
-                <h2>Reservas hechas</h2>
-                <a href="reserva/booked">reservas</a>
+
+            <section class="mb-4" th:if="${role == 'ROLE_CLIENT'}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Reservas hechas</h5>
+                        <p class="card-text">Revise aquí las reservas que ya ha realizado.</p>
+                        <a href="reserva/booked" class="btn btn-primary">Reservas</a>
+                    </div>
+                </div>
             </section>
-            <section>
-                <h2>Vuelos Presentes</h2>
-                <a href="vuelo/buscar">vuelos</a>
+
+            <section class="mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Vuelos Presentes</h5>
+                        <p class="card-text">Consulte los vuelos disponibles actualmente.</p>
+                        <a href="vuelo/buscar" class="btn btn-info">Vuelos</a>
+                    </div>
+                </div>
             </section>
+
         </main>
 
-        <footer>
+        <footer class="bg-dark text-white text-center py-3 mt-4">
             <p>&copy; 2025 AeroDream. Todos los derechos reservados.</p>
         </footer>
 
